@@ -22,43 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="chapter1" />
-        <module name="chapter2" />
-        <module name="chapter2-fragment1" />
-        <module name="chapter2-fragment2" />
-        <module name="chapter2-initializer" />
-        <module name="chapter2-initializer-haha" />
-        <module name="chapter2-springmvc" />
-        <module name="chapter3" />
-        <module name="chapter3-springmvc" />
-        <module name="chapter4" />
-        <module name="chapter4-3_1" />
-        <module name="chapter4-resource" />
-        <module name="chapter5-bigpipe" />
-        <module name="chapter5-pajax" />
         <module name="mapp" />
-        <module name="springbootdemo" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
-      <module name="chapter1" target="1.7" />
-      <module name="chapter2" target="1.7" />
-      <module name="chapter2-fragment1" target="1.7" />
-      <module name="chapter2-fragment2" target="1.7" />
-      <module name="chapter2-initializer" target="1.7" />
-      <module name="chapter2-initializer-haha" target="1.7" />
-      <module name="chapter2-springmvc" target="1.7" />
-      <module name="chapter3" target="1.7" />
-      <module name="chapter3-springmvc" target="1.7" />
-      <module name="chapter4" target="1.7" />
-      <module name="chapter4-3_1" target="1.7" />
-      <module name="chapter4-resource" target="1.7" />
-      <module name="chapter5-bigpipe" target="1.7" />
-      <module name="chapter5-pajax" target="1.7" />
+    <bytecodeTargetLevel>
       <module name="mapp" target="1.5" />
-      <module name="parent" target="1.7" />
-      <module name="servlet3-showcase" target="1.5" />
-      <module name="springbootdemo" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

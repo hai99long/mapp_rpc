@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="chapter3-springmvc:war">
-    <output-path>$PROJECT_DIR$/../servlet3-showcase-master/chapter3-springmvc/target</output-path>
-    <root id="archive" name="chapter3-springmvc.war">
-      <element id="artifact" artifact-name="chapter3-springmvc:war exploded" />
-    </root>
-  </artifact>
-</component>
