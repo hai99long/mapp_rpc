@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wanghl on 2017/4/19.
+ *
  */
 public class Request {
     public static final String HEARTBEAT_EVENT = null;

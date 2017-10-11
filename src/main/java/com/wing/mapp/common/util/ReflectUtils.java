@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 /**
  * Created by wanghl on 2017/3/26.
+ * 反射时调用的一些通用方法
  */
 public final class ReflectUtils {
     /**
@@ -117,9 +118,4 @@ public final class ReflectUtils {
         return ret.toString();
     }
 
-    public static void main(String[] args){
-        /*for(Method method:MyProxyImpl.class.getMethods()){
-            System.out.println(ReflectUtils.getDesc(method));
-        }*/
-    }
 }

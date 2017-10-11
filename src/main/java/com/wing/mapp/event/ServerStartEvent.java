@@ -13,22 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wing.mapp.common.codec.kyro;
+package com.wing.mapp.event;
 
+import org.springframework.context.ApplicationEvent;
 
-import com.wing.mapp.common.codec.MessageCodecUtil;
-import com.wing.mapp.common.codec.MessageDecoder;
-
-/**
- * @author tangjie<https://github.com/tang-jie>
- * @filename:KryoDecoder.java
- * @description:KryoDecoder功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
- */
-public class KryoDecoder extends MessageDecoder {
-
-    public KryoDecoder(MessageCodecUtil util) {
-        super(util);
+public class ServerStartEvent extends ApplicationEvent {
+    public ServerStartEvent(Object source) {
+        super(source);
     }
 }
+

@@ -20,11 +20,8 @@ import io.netty.buffer.ByteBuf;
 import java.io.IOException;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
  * @filename:MessageCodecUtil.java
  * @description:MessageCodecUtil功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
  */
 public interface MessageCodecUtil {
 

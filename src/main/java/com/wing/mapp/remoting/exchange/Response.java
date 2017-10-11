@@ -2,6 +2,7 @@ package com.wing.mapp.remoting.exchange;
 
 /**
  * Created by wanghl on 2017/4/19.
+ * 响应对象
  */
 public class Response {
     public static final String HEARTBEAT_EVENT = null;

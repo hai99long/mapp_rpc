@@ -1,7 +1,5 @@
 package com.wing.mapp.rpc;
 
-import java.util.Map;
-
 /**
  * Created by wanghl on 2017/4/5.
  */
@@ -39,4 +37,5 @@ public interface Invocation {
      * @return invoker.
      */
     Invoker<?> getInvoker();
+
 }

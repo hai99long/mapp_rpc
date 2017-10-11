@@ -25,11 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
  * @filename:MessageDecoder.java
  * @description:MessageDecoder功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
  */
 public class MessageDecoder extends ByteToMessageDecoder {
 
@@ -45,13 +42,14 @@ public class MessageDecoder extends ByteToMessageDecoder {
             return;
         }
 
-        in.markReaderIndex();
-        int messageLength = in.readInt();
+        int messageLength = in.markReaderIndex().readInt();
 
         if (messageLength < 0) {
             ctx.close();
         }
-
+        if (ctx.isRemoved()) {
+            return;
+        }
         if (in.readableBytes() < messageLength) {
             in.resetReaderIndex();
             return;

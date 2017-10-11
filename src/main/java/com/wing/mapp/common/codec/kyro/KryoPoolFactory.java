@@ -1,18 +1,4 @@
-/**
- * Copyright (C) 2016 Newland Group Holding Limited
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.wing.mapp.common.codec.kyro;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -23,11 +9,9 @@ import com.wing.mapp.remoting.exchange.Response;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
+ * @author wanghl
  * @filename:KryoPoolFactory.java
  * @description:KryoPoolFactory功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
  */
 public class KryoPoolFactory {
 
@@ -37,8 +21,8 @@ public class KryoPoolFactory {
         public Kryo create() {
             Kryo kryo = new Kryo();
             kryo.setReferences(false);
-            kryo.register(Request.class);
-            kryo.register(Response.class);
+            kryo.register(Request.class);  //注册请求对象
+            kryo.register(Response.class); //注册响应对象
             kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
             return kryo;
         }
@@ -49,6 +33,10 @@ public class KryoPoolFactory {
     private KryoPoolFactory() {
     }
 
+    /**
+     * 获取KryoPool实例
+     * @return
+     */
     public static KryoPool getKryoPoolInstance() {
         if (poolFactory == null) {
             synchronized (KryoPoolFactory.class) {
@@ -60,7 +48,7 @@ public class KryoPoolFactory {
         return poolFactory.getPool();
     }
 
-    public KryoPool getPool() {
+    private KryoPool getPool() {
         return pool;
     }
 }

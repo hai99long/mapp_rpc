@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wanghl on 2017/3/25.
+ * 客户端调用时根据接口生成的代理类
  */
 public abstract class Proxy {
     private static final AtomicLong proxyClassCounter = new AtomicLong(0);
@@ -100,7 +101,7 @@ public abstract class Proxy {
         }
         long id = proxyClassCounter.getAndIncrement();
         String proxyPkg  = null;
-        ClassGenerator interfaceImplement = null,proxyClass = null;
+        ClassGenerator interfaceImplement = null, proxyClass = null;
         try{
             interfaceImplement = ClassGenerator.newInstance(classLoader);
             Set<String> worked = new HashSet<String>();

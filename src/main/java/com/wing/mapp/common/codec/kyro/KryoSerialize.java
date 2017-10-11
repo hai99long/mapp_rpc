@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2016 Newland Group Holding Limited
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.wing.mapp.common.codec.kyro;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -25,11 +10,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
  * @filename:KryoSerialize.java
  * @description:KryoSerialize功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
+ * Kryo序列化。它是针对Java，而定制实现的高效对象序列化框架，
+ * 相比Java本地原生序列化方式，Kryo在处理性能上、码流大小上等等方面有很大的优化改进。
+ * 出于应对高并发场景下，频繁地创建、销毁序列化对象，会非常消耗JVM的内存资源、以及时间。
+ * Kryo3以后的版本中集成引入了序列化对象池功能模块（KryoFactory、KryoPool），
+ * 这样我们就不必再利用Apache Commons Pool对其进行二次封装
  */
 public class KryoSerialize  {
 
@@ -39,22 +26,40 @@ public class KryoSerialize  {
         this.pool = pool;
     }
 
+    /**
+     * 序列化对象
+     * @param output
+     * @param object
+     * @throws IOException
+     */
     public void serialize(OutputStream output, Object object) throws IOException {
         Kryo kryo = pool.borrow();
         Output out = new Output(output);
-        kryo.writeClassAndObject(out, object);
-        out.close();
-        output.close();
-        pool.release(kryo);
+        try{
+            kryo.writeClassAndObject(out, object);
+        }finally {
+            out.close();
+            output.close();
+            pool.release(kryo);
+        }
     }
 
+    /**
+     * 反序列化对象
+     * @param input
+     * @return
+     * @throws IOException
+     */
     public Object deserialize(InputStream input) throws IOException {
         Kryo kryo = pool.borrow();
         Input in = new Input(input);
-        Object result = kryo.readClassAndObject(in);
-        in.close();
-        input.close();
-        pool.release(kryo);
-        return result;
+        try{
+            Object result = kryo.readClassAndObject(in);
+            return result;
+        }finally {
+            in.close();
+            input.close();
+            pool.release(kryo);
+        }
     }
 }

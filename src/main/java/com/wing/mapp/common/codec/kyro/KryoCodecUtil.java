@@ -15,22 +15,22 @@
  */
 package com.wing.mapp.common.codec.kyro;
 
+import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.pool.KryoPool;
 import com.google.common.io.Closer;
+import com.wing.mapp.common.codec.MessageCodecUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
  * @filename:KryoCodecUtil.java
  * @description:KryoCodecUtil功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
  */
-public class KryoCodecUtil {
+public class KryoCodecUtil implements MessageCodecUtil{
 
     private KryoPool pool;
     private static Closer closer = Closer.create();
@@ -39,7 +39,13 @@ public class KryoCodecUtil {
         this.pool = pool;
     }
 
-    public void encode(final ByteBuf out, final Object message) throws IOException {
+    /**
+     * 编码，将对象编码为ByteBuf
+     * @param outBuffer
+     * @param message
+     * @throws IOException
+     */
+    public void encode(final ByteBuf outBuffer, final Object message) throws IOException {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             closer.register(byteArrayOutputStream);
@@ -47,19 +53,38 @@ public class KryoCodecUtil {
             kryoSerialization.serialize(byteArrayOutputStream, message);
             byte[] body = byteArrayOutputStream.toByteArray();
             int dataLength = body.length;
-            out.writeInt(dataLength);
-            out.writeBytes(body);
+            outBuffer.writeInt(dataLength);
+            outBuffer.writeBytes(body);
         } finally {
             closer.close();
         }
     }
 
+    /**
+     * 解码，将byte数组解码为message对象
+     * @param body
+     * @return
+     * @throws IOException
+     */
     public Object decode(byte[] body) throws IOException {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
             closer.register(byteArrayInputStream);
             KryoSerialize kryoSerialization = new KryoSerialize(pool);
             Object obj = kryoSerialization.deserialize(byteArrayInputStream);
+            return obj;
+        } finally {
+            closer.close();
+        }
+    }
+    public Object decode(final ByteBuf byteBuf) throws IOException {
+        try {
+            if(byteBuf == null)
+                return null;
+            Input input = new Input(new ByteBufInputStream(byteBuf));
+            closer.register(input);
+            KryoSerialize kryoSerialization = new KryoSerialize(pool);
+            Object obj = kryoSerialization.deserialize(input);
             return obj;
         } finally {
             closer.close();

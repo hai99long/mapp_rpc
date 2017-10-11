@@ -26,5 +26,15 @@ public abstract class WingServerInvoker<T> implements Invoker<T> {
         Result result =  new RpcResult(doInvoke(proxy, invocation.getMethodName(), invocation.getParameterTypes(), invocation.getArguments()));
         return result;
     }
+
+    /**
+     * 在NettyServerInitializeTask中有一个实现，用于调用wrapper生成的包装代理类
+     * @param proxy
+     * @param methodName
+     * @param parameterTypes
+     * @param arguments
+     * @return
+     * @throws Throwable
+     */
     protected abstract Object doInvoke(T proxy, String methodName, Class<?>[] parameterTypes, Object[] arguments) throws Throwable;
 }

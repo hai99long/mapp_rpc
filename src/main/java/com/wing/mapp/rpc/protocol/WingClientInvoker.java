@@ -7,21 +7,26 @@ import com.wing.mapp.remoting.transport.netty.NettyClientHandler;
 import com.wing.mapp.rpc.Invocation;
 import com.wing.mapp.rpc.Invoker;
 import com.wing.mapp.rpc.Result;
-import com.wing.mapp.rpc.RpcResult;
 
 /**
  * Created by wanghl on 2017/3/31.
+ * 客户端请求的invoker，用于包装客户端的请求
  */
-public class WingClientInvoker<T> implements Invoker<Request> {
-    private Request request;
+public class WingClientInvoker implements Invoker<Request> {
     public Class<Request> getInterface() {
         return Request.class;
     }
 
-    public WingClientInvoker(Request request){
-        this.request = request;
+    public WingClientInvoker(){
     }
+
+    /**
+     * 请求服务端
+     * @param invocation
+     * @return
+     */
     public Result invoke(Invocation invocation) {
+        Request request = new Request();
         request.setData(invocation);
         NettyClientHandler handler = null;
         try {
@@ -29,7 +34,7 @@ public class WingClientInvoker<T> implements Invoker<Request> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ResultFuture resultFuture = handler.sendRequest(request);
+        ResultFuture resultFuture = handler.sendRequest(request);  //发送请求至服务端
         try {
             return resultFuture.get();
         } catch (InterruptedException e) {

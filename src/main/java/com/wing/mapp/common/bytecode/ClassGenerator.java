@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wanghl on 2017/3/26.
+ * 利用javassist生成类
  */
 public class ClassGenerator {
     private static final AtomicLong CLASS_NAME_COUNTER = new AtomicLong(0);

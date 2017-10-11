@@ -13,26 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wing.mapp.common.codec;
+package com.wing.mapp.event;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToByteEncoder;
+import com.google.common.eventbus.Subscribe;
+import com.wing.mapp.remoting.transport.netty.NettyClientExecutor;
 
 /**
- * @filename:MessageEncoder.java
- * @description:MessageEncoder功能模块
+ * 销毁事件的监听器
  */
-public class MessageEncoder extends MessageToByteEncoder<Object> {
+public class ClientStopEventListener {
+    public int lastMessage = 0;
 
-    private MessageCodecUtil util = null;
-
-    public MessageEncoder(final MessageCodecUtil util) {
-        this.util = util;
+    @Subscribe
+    public void listen(ClientStopEvent event) {
+        lastMessage = event.getMessage();
+        NettyClientExecutor.getInstance().stop();
     }
 
-    protected void encode(final ChannelHandlerContext ctx, final Object msg, final ByteBuf out) throws Exception {
-        util.encode(out, msg);
+    public int getLastMessage() {
+        return lastMessage;
     }
 }
 

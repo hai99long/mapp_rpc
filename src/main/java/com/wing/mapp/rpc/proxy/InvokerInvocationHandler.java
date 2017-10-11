@@ -16,6 +16,14 @@ public class InvokerInvocationHandler implements InvocationHandler {
         this.invoker = handler;
     }
 
+    /**
+     * 客户端的代理类调用服务端的接口
+     * @param proxy
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String methodName = method.getName();
         Class<?>[] parameterTypes = method.getParameterTypes();

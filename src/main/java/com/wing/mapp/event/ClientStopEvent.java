@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wing.mapp.common.codec.kyro;
-
-
-import com.wing.mapp.common.codec.MessageCodecUtil;
-import com.wing.mapp.common.codec.MessageEncoder;
+package com.wing.mapp.event;
 
 /**
- * @author tangjie<https://github.com/tang-jie>
- * @filename:KryoEncoder.java
- * @description:KryoEncoder功能模块
- * @blogs http://www.cnblogs.com/jietang/
- * @since 2016/10/7
+ * 销毁事件，无业务用处
  */
-public class KryoEncoder extends MessageEncoder {
+public class ClientStopEvent {
+    private final int message;
 
-    public KryoEncoder(MessageCodecUtil util) {
-        super(util);
+    public ClientStopEvent(int message) {
+        this.message = message;
+    }
+
+    public int getMessage() {
+        return message;
     }
 }
 

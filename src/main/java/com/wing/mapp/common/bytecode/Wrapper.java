@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wanghl on 2017/3/22.
+ * 服务端将接口实现类包装一下，以便在netty的handler中调用
  */
 public abstract class Wrapper {
     private static AtomicLong WRAPPER_CLASS_COUNTER = new AtomicLong(0);

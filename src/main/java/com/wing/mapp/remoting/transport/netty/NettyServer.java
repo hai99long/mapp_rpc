@@ -1,33 +1,27 @@
 package com.wing.mapp.remoting.transport.netty;
 
+import com.google.common.util.concurrent.*;
+import com.wing.mapp.common.codec.MessageCodecUtil;
+import com.wing.mapp.common.codec.MessageDecoder;
+import com.wing.mapp.common.codec.MessageEncoder;
 import com.wing.mapp.common.codec.kyro.KryoCodecUtil;
 import com.wing.mapp.common.codec.kyro.KryoPoolFactory;
 import com.wing.mapp.remoting.exchange.Request;
 import com.wing.mapp.remoting.exchange.Response;
-import com.wing.mapp.remoting.transport.netty.codec.NettyKryoDecoder;
-import com.wing.mapp.remoting.transport.netty.codec.NettyKryoEncoder;
-import com.wing.mapp.remoting.transport.netty.codec.RpcDecoder;
-import com.wing.mapp.remoting.transport.netty.codec.RpcEncoder;
 import com.wing.mapp.rpc.parallel.NamedThreadFactory;
 import com.wing.mapp.rpc.parallel.RpcThreadPool;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 /**
  * Created by wanghl on 2017/4/25.
@@ -39,7 +33,7 @@ public class NettyServer  {
     ThreadFactory threadRpcFactory = new NamedThreadFactory("NettyServer ThreadFactory");
     EventLoopGroup bossGroup = new NioEventLoopGroup();
     EventLoopGroup workerGroup = new NioEventLoopGroup(Math.max(2, Runtime.getRuntime().availableProcessors())*2, threadRpcFactory);
-    private KryoCodecUtil util = new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+    private MessageCodecUtil util = new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
     public void start(){
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -47,11 +41,15 @@ public class NettyServer  {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel channel) throws Exception {
-                            channel.pipeline().addLast(new NettyKryoDecoder(util));
-                            channel.pipeline().addLast(new NettyKryoEncoder(util));
+                            channel.pipeline().addLast(new MessageDecoder(util));
+                            channel.pipeline().addLast(new MessageEncoder(util));
                             channel.pipeline().addLast("handler",new NettyServerHandler());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)
+                    //Boss线程内存池配置.
+                    .option(ChannelOption.ALLOCATOR,PooledByteBufAllocator.DEFAULT)
+                    //Work线程内存池配置.
+                    .childOption(ChannelOption.ALLOCATOR,PooledByteBufAllocator.DEFAULT)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = bootstrap.bind("127.0.0.1", 28880).sync();
             future.channel().closeFuture().sync();

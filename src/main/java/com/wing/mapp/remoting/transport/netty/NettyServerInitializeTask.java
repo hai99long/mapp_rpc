@@ -1,7 +1,5 @@
 package com.wing.mapp.remoting.transport.netty;
 
-import java.util.concurrent.Callable;
-
 import com.wing.mapp.common.bytecode.Wrapper;
 import com.wing.mapp.remoting.exchange.Request;
 import com.wing.mapp.remoting.exchange.Response;
@@ -9,30 +7,38 @@ import com.wing.mapp.rpc.Invoker;
 import com.wing.mapp.rpc.Result;
 import com.wing.mapp.rpc.RpcInvocation;
 import com.wing.mapp.rpc.protocol.WingServerInvoker;
-import com.wing.mapp.sample.StudentInfoServiceImpl;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.concurrent.Callable;
 
 /**
  * Created by wanghl on 2017/5/6.
  */
 public class NettyServerInitializeTask implements Callable<Response> {
     private Request request;
-
-    public NettyServerInitializeTask(Request request){
+    private ClassPathXmlApplicationContext context;
+    public NettyServerInitializeTask(ClassPathXmlApplicationContext context,Request request){
+        this.context = context;
         this.request = request;
     }
 
+    /**
+     * 响应客户端的请求
+     * @return
+     * @throws Exception
+     */
     public Response call() throws Exception {
         Response response = new Response(request.getId());
-        System.out.println("server client:"+request.getId());
+        System.out.println(request.getId());
         Result result = null;
         final RpcInvocation invocation = (RpcInvocation) request.getData();
-        StudentInfoServiceImpl studentInfoService = new StudentInfoServiceImpl();
-        final Wrapper wrapper = Wrapper.getWrapper(StudentInfoServiceImpl.class);
-        Invoker<StudentInfoServiceImpl> invoker = new WingServerInvoker<StudentInfoServiceImpl>(studentInfoService) {
-            protected Object doInvoke(StudentInfoServiceImpl studentInfoService, String methodName,
+        Object serviceImpl = context.getBean(invocation.getClassName());
+        final Wrapper wrapper = Wrapper.getWrapper(serviceImpl.getClass());
+        Invoker<?> invoker = new WingServerInvoker<Object>(serviceImpl) {
+            protected Object doInvoke(Object serviceImpl, String methodName,
                                       Class<?>[] parameterTypes,
                                       Object[] arguments) throws Throwable {
-                return wrapper.invokeMethod(studentInfoService, methodName, parameterTypes,arguments);
+                return wrapper.invokeMethod(serviceImpl, methodName, parameterTypes,arguments);
             }
         };
         try {

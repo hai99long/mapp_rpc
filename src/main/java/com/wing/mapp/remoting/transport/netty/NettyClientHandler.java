@@ -3,15 +3,17 @@ package com.wing.mapp.remoting.transport.netty;
 import com.wing.mapp.remoting.exchange.Request;
 import com.wing.mapp.remoting.exchange.Response;
 import com.wing.mapp.remoting.exchange.ResultFuture;
-import com.wing.mapp.rpc.RpcResult;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
-import java.net.SocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by wanghl on 2017/4/8.
+ * 客户端处理
  */
 public class NettyClientHandler extends SimpleChannelInboundHandler<Response> {
     private ConcurrentHashMap<Long, ResultFuture> mapResultFuture = new ConcurrentHashMap<Long, ResultFuture>();
@@ -19,7 +21,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Response> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Response response) throws Exception {
         //System.out.println(((RpcResult)response.getResult()).getValue()+"|"+response.getId());
-        Long requestId = response.getId();
+        long requestId = response.getId();
         ResultFuture resultFuture = mapResultFuture.get(requestId);
         if(resultFuture!=null){
             mapResultFuture.remove(requestId);
@@ -44,7 +46,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Response> {
     public ResultFuture sendRequest(Request request){
         ResultFuture resultFuture = new ResultFuture(request);
         mapResultFuture.put(request.getId(),resultFuture);
-        channel.writeAndFlush(request);
+        channel.writeAndFlush(request);  //发送请求至服务端
         return resultFuture;
     }
 }

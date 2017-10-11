@@ -41,11 +41,17 @@ public class NettyClient {
         }
         return rpcClientLoader;
     }
-    public void load(String serverAddress){
+
+    /**
+     * 建立到服务端的链接
+     * @param serverAddress
+     * @param protocol
+     */
+    public void load(String serverAddress,String protocol){
         String[] address = serverAddress.split(RpcSystemConfig.DELIMITER);
         if (address.length == 2) {
             final InetSocketAddress remoteAddr = new InetSocketAddress(address[0], Integer.parseInt(address[1]));
-            ListenableFuture<Boolean> listenableFuture = threadPoolExecutor.submit(new NettyClientInitializeTask(eventLoopGroup,remoteAddr));
+            ListenableFuture<Boolean> listenableFuture = threadPoolExecutor.submit(new NettyClientInitializeTask(eventLoopGroup,remoteAddr,protocol));
             Futures.addCallback(listenableFuture, new FutureCallback<Boolean>() {
                 public void onSuccess(Boolean result) {
                     try{
@@ -67,6 +73,13 @@ public class NettyClient {
             },threadPoolExecutor);
         }
     }
+
+    public void unLoad() {
+        messageSendHandler.close();
+        threadPoolExecutor.shutdown();
+        eventLoopGroup.shutdownGracefully();
+    }
+
     public void setMessageSendHandler(NettyClientHandler messageInHandler) {
         try {
             lock.lock();
