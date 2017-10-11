@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="chapter5-pajax:war">
+    <output-path>$PROJECT_DIR$/../servlet3-showcase-master/chapter5-pajax/target</output-path>
+    <root id="archive" name="servlet3-showcase.war">
+      <element id="artifact" artifact-name="chapter5-pajax:war exploded" />
+    </root>
+  </artifact>
+</component>

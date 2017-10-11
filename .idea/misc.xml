@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Controller" />
+      <item index="1" class="java.lang.String" itemvalue="Test" />
+    </list>
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter1" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter2" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter2-springmvc" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter3" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter3-springmvc" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter4" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter4-3_1" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter5-bigpipe" />
+    <file type="web" url="file://$PROJECT_DIR$/../servlet3-showcase-master/chapter5-pajax" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../java-hystrix-master/pom.xml" />
+        <option value="$PROJECT_DIR$/../servlet3-showcase-master/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
