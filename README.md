@@ -18,11 +18,11 @@
 # 快速开始
 1、开发服务端的服务类及实现类，并如下面这样配置在spring的配置文件中：<br>
 ```Java
-\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/> 
+<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/> 
 ```
 2、在客户端的spring配置文件中，配置如下代码：<br>
 ```Java
-\<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
+<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
                         protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/> 
 ```
 3、在服务端调用NettyServer的start方法则可以启动服务端
@@ -34,11 +34,11 @@
  ## English Introduction
 1、Develop the service classes and implementation classes of the server, and configure them in the spring configuration file as follows：<br>
 ```Java
-\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/>
+<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/>
 ```
 2、In the client's spring configuration file, configure the following code：<br>
 ```Java
-\<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
+<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
                         protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/>
 ```                        
 3、When invoking the NettyServer's start method on the server side, you can start the server
