@@ -3,7 +3,7 @@
 * 利用netty实现数据交换，netty网络模型采用主从Reactor线程模型
 * 服务端采用guava线程池对请求进行异步回调处理
 * 消息网络传输的序列化方式目前可以采用kyro、protostuff
-* rpc服务的启动、注册、卸载可以利用spring标签统一管理
+* rpc服务的启动、注册、卸载可以利用自定义的spring标签统一管理
 * 采用javassist生成服务代理类、包装类
 * 采用testng进行单元测试
 ## English Introduction
@@ -11,7 +11,7 @@
 * The data exchange is realized by using netty, and the netty network model adopts the master-slave Reactor thread model
 * The server uses the guava thread pool to process the request For asynchronous callback handler
 * The serialization of message network transmission can now take kyro and protostuff
-* The startup, registration, and uninstall of RPC services can be managed uniformly using the spring tag
+* The startup, registration, and uninstall of RPC services can be managed with custom spring Tags
 * Using javassist to generate service proxy classes and wrapper classes
 * Unit testing using TestNG
 
