@@ -28,8 +28,8 @@
 3、在服务端调用NettyServer的start方法则可以启动服务端
 4、在客户端就跟普通的调用spring的bean一样调用即可，例子可以看测试类TestRpc中的方法，如：<br>
 ```Java
-   RpcTestService rpcTestService = (RpcTestService)applicationContext.getBean("rpcTestService"); 
-   String result = rpcTestService.strConcatUUID("wanghl");
+RpcTestService rpcTestService = (RpcTestService)applicationContext.getBean("rpcTestService"); 
+String result = rpcTestService.strConcatUUID("wanghl");
 ```
  ## English Introduction
 1、Develop the service classes and implementation classes of the server, and configure them in the spring configuration file as follows：<br>
