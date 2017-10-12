@@ -17,21 +17,33 @@
 
 # 快速开始
 1、开发服务端的服务类及实现类，并如下面这样配置在spring的配置文件中：<br>
-\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/> <br>
+```Java
+\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/> 
+```
 2、在客户端的spring配置文件中，配置如下代码：<br>
+```Java
 \<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
-                        protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/> <br>
+                        protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/> 
+```
 3、在服务端调用NettyServer的start方法则可以启动服务端
 4、在客户端就跟普通的调用spring的bean一样调用即可，例子可以看测试类TestRpc中的方法，如：<br>
-   RpcTestService rpcTestService = (RpcTestService)applicationContext.getBean("rpcTestService"); <br>
+```Java
+   RpcTestService rpcTestService = (RpcTestService)applicationContext.getBean("rpcTestService"); 
    String result = rpcTestService.strConcatUUID("wanghl");
+```
  ## English Introduction
 1、Develop the service classes and implementation classes of the server, and configure them in the spring configuration file as follows：<br>
-\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/> <br>
+```Java
+\<bean id="com.wing.service.RpcTestService" class="com.wing.service.impl.RpcTestServiceImpl"/>
+```
 2、In the client's spring configuration file, configure the following code：<br>
+```Java
 \<nettyrpc:reference id="rpcTestService" interfaceName="com.wing.service.RpcTestService"
-                        protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/> <br>
+                        protocol="kyro" address="127.0.0.1:28880" serviceId="rpcTestService"/>
+```                        
 3、When invoking the NettyServer's start method on the server side, you can start the server
 4、In the client, just like the ordinary call spring bean, the example can be seen in the test class TestRpc methods, such as：<br>
+```Java
 RpcTestService rpcTestService = (RpcTestService)applicationContext.getBean("rpcTestService"); <br>
-   String result = rpcTestService.strConcatUUID("wanghl");
+String result = rpcTestService.strConcatUUID("wanghl");
+```
